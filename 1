@@ -1,0 +1,21 @@
+let app = require('express')()
+let server = require("http").Server(app)
+let io = require('socket.io')(server)
+
+let port = process.env.port || 4000
+
+app.listen(port, () => {
+	console.log("Listening on port ", port)
+})
+
+io.on("feed", () => {
+	console.log("Camera feed received")
+})
+
+io.emit("incoming data", {data: "success"})
+
+
+app.get("/", (req, res) => {
+	res.send("Welcome to feedCam api")
+})
+
